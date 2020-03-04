@@ -12,18 +12,17 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import '../css/app.scss';
 
 import App from './components/App';
+import CreateEmployee from './components/CreateEmployee';
 import getLogger from './utils/logger';
 
 const log = getLogger('App');
-
-const CreateEmployee = () => <h1>Create Employee Component</h1>;
 
 const unstyledList = {
   listStyleType: 'none',
   margin: 0,
   padding: 0,
 };
-const inline = { display: 'inline', padding: '1em', };
+const inline = { display: 'inline', padding: '1em' };
 
 const init = () => {
   log.info('init() :: App starts booting...');
