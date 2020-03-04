@@ -18,17 +18,24 @@ const log = getLogger('App');
 
 const CreateEmployee = () => <h1>Create Employee Component</h1>;
 
+const unstyledList = {
+  listStyleType: 'none',
+  margin: 0,
+  padding: 0,
+};
+const inline = { display: 'inline', padding: '1em', };
+
 const init = () => {
   log.info('init() :: App starts booting...');
   ReactDom.render(
     <Router>
       <div>
         <nav>
-          <ul>
-            <li>
+          <ul style={unstyledList}>
+            <li style={inline}>
               <Link to="/">Home</Link>
             </li>
-            <li>
+            <li style={inline}>
               <Link to="/employees/new">New Employee</Link>
             </li>
           </ul>
