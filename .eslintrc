@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "plugin:prettier/recommended", "prettier/react"],
+  "extends": ["airbnb"],
   "plugins": ["babel"],
   "parser": "babel-eslint",
   "env": {
