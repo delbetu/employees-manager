@@ -17,11 +17,13 @@ class EmployeesController < ApplicationController
   def create
     @employee = Employee.new(employee_params)
 
-    if @employee.save
-      render :show, status: :created, location: @employee
-    else
-      render json: @employee.errors, status: :unprocessable_entity
-    end
+    @employee.save!
+    render :show, status: :created
+  rescue ActiveRecord::RecordNotUnique => e
+    render json: { error_message: 'Email already taken.' }, status: :ok
+  rescue => e
+    Rails.logger.error("Error Creating Employee #{e.message}")
+    render json: { error_message: 'Unexpected error occurs' }, status: :unprocessable_entity
   end
 
   # PATCH/PUT /employees/1
@@ -48,6 +50,6 @@ class EmployeesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def employee_params
-      params.require(:employee).permit(:name, :last_name, :gender)
+      params.require(:employee).permit(:email, :name, :last_name, :gender)
     end
 end

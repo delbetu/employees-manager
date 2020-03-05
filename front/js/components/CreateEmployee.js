@@ -8,7 +8,7 @@ class CreateEmployee extends React.Component {
       lastName: '',
       email: '',
       gender: '',
-      errorMessages: []
+      messages: []
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -17,8 +17,29 @@ class CreateEmployee extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    let newMessages = this.state.errorMessages.concat('submit not implemented')
-    this.setState({errorMessages: newMessages})
+    const that = this
+    fetch("/employees",
+      {
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        method: "POST",
+        body: JSON.stringify({
+          first_name: that.state.firstName,
+          last_name: that.state.lastName,
+          email: that.state.email,
+          gender: that.state.gender,
+        })
+      })
+      .then( res => res.json() )
+      .then(function(res){
+        if (res.error_message.length > 0) {
+          that.setState({messages: [res.error_message]})
+        }
+        else {
+          that.setState({messages: ['Employee successfuly created.']})
+        }
+      }).catch(function(err){
+        console.log(err)
+      })
   }
 
   handleChange(event) {
@@ -64,7 +85,7 @@ class CreateEmployee extends React.Component {
 
       <ul className='error-messages'>
         {
-          this.state.errorMessages.map(( msg, i ) => <li key={i}>{msg}</li>)
+          this.state.messages.map(( msg, i ) => <li key={i}>{msg}</li>)
         }
       </ul>
     </div>

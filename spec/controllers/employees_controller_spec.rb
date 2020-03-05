@@ -70,7 +70,6 @@ RSpec.describe EmployeesController, type: :controller do
         post :create, params: {employee: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(employee_url(Employee.last))
       end
     end
 
