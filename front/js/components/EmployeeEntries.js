@@ -5,6 +5,7 @@ class EmployeeEntries extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      messages: [],
       entries: [
         {
           name: 'Marcos',
@@ -20,6 +21,22 @@ class EmployeeEntries extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const that = this;
+    fetch('/employees/:employee_id/entries',
+      {
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        method: "GET",
+      }).then( res => res.json() ) // {"entries":[{"id":1,"date":"2020-03-03","total_time":10.0}]}
+      .then(res => {
+        if (res.hasOwnProperty('error_message')) {
+          return that.setState({messages: [res.error_message]})
+        }
+
+        that.setState({entries: res.entries})
+      }).catch(err => console.log(err))
+  }
+
   render() {
     const { id } = this.props.match.params;
 
@@ -29,13 +46,12 @@ class EmployeeEntries extends React.Component {
 
         <table>
           <thead>
-            <tr><th>Name</th><th>Date</th><th>Worked Hours</th></tr>
+            <tr><th>Date</th><th>Worked Hours</th></tr>
           </thead>
           <tbody>
             {
               this.state.entries.map(( entry, i ) =>
                 <tr key={i}>
-                  <td>{entry.name}</td>
                   <td>{entry.date}</td>
                   <td>{entry.total_time}</td>
                 </tr>
@@ -43,6 +59,10 @@ class EmployeeEntries extends React.Component {
             }
           </tbody>
         </table>
+
+        <ul className='messages'>
+          { this.state.messages.map(( msg, i ) => <li key={i}>{msg}</li>) }
+        </ul>
       </div>
     )
   }

@@ -5,6 +5,11 @@ class EntriesController < ApplicationController
   # GET /entries.json
   def index
     @entries = Entry.all
+
+    render :index, status: :ok
+  rescue => e
+    Rails.logger.error("Error at EntriesController#index #{e.message}")
+    render json: { error_message: 'Unexpected error occurs' }, status: :unprocessable_entity
   end
 
   # GET /entries/1
