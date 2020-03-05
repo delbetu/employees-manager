@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :entries
   resources :employees, only: :create
   get 'home/index'
   get 'home/timestamp'
