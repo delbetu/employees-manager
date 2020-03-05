@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 2020_03_05_170142) do
 
   create_table "entries", force: :cascade do |t|
     t.bigint "employee_id", null: false
-    t.date "date"
-    t.time "time_in"
+    t.date "date", null: false
+    t.time "time_in", null: false
     t.time "time_out"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
