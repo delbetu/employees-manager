@@ -6,13 +6,14 @@ import '@babel/polyfill';
 
 import React from 'react';
 import ReactDom from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, useParams } from 'react-router-dom';
 
 // Include the main scss file for webpack processing.
 import '../css/app.scss';
 
 import App from './components/App';
 import CreateEmployee from './components/CreateEmployee';
+import EmployeeEntries from './components/EmployeeEntries';
 import getLogger from './utils/logger';
 
 const log = getLogger('App');
@@ -37,12 +38,18 @@ const init = () => {
             <li style={inline}>
               <Link to="/employees/new">New Employee</Link>
             </li>
+            <li style={inline}>
+              <Link to="/employees/1/entries">Entries for Employee 1</Link>
+            </li>
           </ul>
         </nav>
 
         <Switch>
           <Route path="/employees/new">
             <CreateEmployee />
+          </Route>
+            <Route path="/employees/:id/entries">
+            <EmployeeEntries />
           </Route>
           <Route path="/">
             <App />
