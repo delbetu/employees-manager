@@ -1,6 +1,35 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
+class CheckInOutButton extends React.Component {
+  constructor(props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick() {
+    //TODO: Not Implemented Yet.
+    fetch('/employees/:employee_id/entries',
+      {
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        method: "PUT",
+      }).then( res => res.json() )
+      .then(res => {
+        if (res.hasOwnProperty('error_message')) {
+          return that.setState({messages: [res.error_message]})
+        }
+
+        console.log('CheckIn/CheckOut')
+      }).catch(err => console.log(err))
+  }
+
+  render() {
+    return (
+      <button onClick={this.handleClick}> CheckIn/CheckOut {this.props.employeeId}</button>
+    )
+  }
+}
+
 class EmployeeEntries extends React.Component {
   constructor(props) {
     super(props)
@@ -63,6 +92,8 @@ class EmployeeEntries extends React.Component {
         <ul className='messages'>
           { this.state.messages.map(( msg, i ) => <li key={i}>{msg}</li>) }
         </ul>
+
+        <CheckInOutButton employeeId={id} />
       </div>
     )
   }
