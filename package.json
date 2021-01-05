@@ -22,7 +22,7 @@
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "fibers": "^4.0.2",
     "loglevel": "^1.6.7",
     "loglevel-plugin-prefix": "^0.8.4",
